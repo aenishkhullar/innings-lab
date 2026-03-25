@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InningsLab | Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="head">
+            <h1 class="name-heading">Hi, Guest 👋</h1>
+            <p>Here's a snapshot of your performance this season.</p>
+        </div>
+
+        <form class="match-form">
+            <input type="date" id="matchDate" required>
+            <input type="number" id="runs" placeholder="Runs" required>
+            <input type="number" id="balls" placeholder="Balls" required>
+            <input type="number" id="fours" placeholder="4s" required>
+            <input type="number" id="sixes" placeholder="6s" required>
+            <input type="number" id="dots" placeholder="Dots" required>
+            <select id="opponent">
+                <option value="India">India</option>
+                <option value="Australia">Australia</option>
+                <option value="England">England</option>
+                <option value="New Zealand">New Zealand</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Pakistan">Pakistan</option>
+                <option value="West Indies">West Indies</option>
+                <option value="Afghanistan">Afghanistan</option>
+                <option value="Sri Lanka">Sri Lanka</option>
+                <option value="Zimbabwe">Zimbabwe</option>
+                <option value="Bangladesh">Bangladesh</option>
+                <option value="Ireland">Ireland</option>
+                <option value="USA">USA</option>
+                <option value="Namibia">Namibia</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="Nepal">Nepal</option>
+                <option value="Other">Other</option>
+            </select>
+            <input type="text" id="customOpponent" placeholder="Enter Team Name" style="display:none;">
+            <select id="out">
+                <option value="true">Out</option>
+                <option value="false">Not Out</option>
+            </select>
+            <select id="dismissal_type">
+                <option value="Caught">Caught</option>
+                <option value="Bowled">Bowled</option>
+                <option value="LBW">LBW</option>
+                <option value="Run Out">Run Out</option>
+                <option value="Stumped">Stumped</option>
+            </select>
+            <button type="submit">Add Match</button>
+        </form>
+
+        <div class="metrics-container">
+            <div class="card analytics-card big">
+                <div class="analytics-header">
+                    <h3>Performance Overview</h3>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <p>Matches</p>
+                        <h2 id="totalMatches">0</h2>
+                    </div>
+                    <div class="stat-box">
+                        <p>Average</p>
+                        <h2 id="average">0.00</h2>
+                    </div>
+                    <div class="stat-box">
+                        <p>Strike Rate</p>
+                        <h2 id="strikeRate">0.00</h2>
+                    </div>
+                    <div class="stat-box">
+                        <p>100s</p>
+                        <h2 id="100">0</h2>
+                    </div>
+                    <div class="stat-box">
+                        <p>50s</p>
+                        <h2 id="50">0</h2>
+                    </div>
+                    <div class="stat-box">
+                        <p>Highest</p>
+                        <h2 id="highestScore">0</h2>
+                    </div>
+                </div>
+                <div class="runs-section">
+                    <div class="runs-label">
+                        <span>Total Runs</span>
+                        <h2 id="totalRuns">0</h2>
+                    </div>
+                    <div class="mini-chart-container">
+                        <canvas id="runsBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card big chart-card">
+                <h3>Match-by-Match Runs</h3>
+                <canvas id="performanceChart"></canvas>
+            </div>
+
+            <div class="card tall team-analysis-card">
+                <h3>Team Analysis</h3>
+                <div class="team-stats-container">
+                    <div class="team-stat-box">
+                        <h4>Strongest Team</h4>
+                        <div class="team-flex">
+                            <h2 id="strongestTeam" style="color: #22c55e;">none</h2>
+                            <p id="strongestAvg">Avg: 0.00</p>
+                        </div>
+                    </div>
+                    <div class="team-stat-box">
+                        <h4>Weakest Team</h4>
+                        <div class="team-flex">
+                            <h2 id="weakestTeam" style="color: #ff4d4d;">none</h2>
+                            <p id="weakestAvg">Avg: 0.00</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card tall dismissal-card" style="display: flex; flex-direction: column;">
+                <h3>Dismissal Analysis</h3>
+                <div style="flex: 1; min-height: 150px; position: relative; display: flex; justify-content: center; align-items: center; padding-bottom: 10px;">
+                    <canvas id="dismissalChart" style="max-height: 100%;"></canvas>
+                </div>
+                <p class="insight-text" id="dismissalInsight" style="margin-top: auto; padding-top: 10px;">Add matches to see dismissal insights.</p>
+            </div>
+
+            <div class="card tall boundary-card">
+                <h3>Batting Approach</h3>
+                <div class="boundary-stats">
+                    <div class="b-stat">
+                        <p>Boundaries</p>
+                        <h2 id="boundaryRunsText">0</h2>
+                    </div>
+                    <div class="b-stat">
+                        <p>Running</p>
+                        <h2 id="runningRunsText">0</h2>
+                    </div>
+                </div>
+                <div class="progress-wrapper">
+                    <div class="progress-labels">
+                        <span>Boundaries <span style="font-size: 10px; opacity: 0.5; margin: 0 4px;">VS</span> Running</span>
+                        <span id="boundaryPercentageText">0%</span>
+                    </div>
+                    <div class="progress-container" style="display: flex;">
+                        <div class="progress-bar" id="boundaryProgressBar" style="background: #4f46e5;"></div>
+                        <div class="progress-bar" id="runningProgressBar" style="background: #22c55e;"></div>
+                    </div>
+                </div>
+                <div class="progress-wrapper">
+                    <div class="progress-labels">
+                        <span>4s <span style="font-size: 10px; opacity: 0.5; margin: 0 4px;">VS</span> 6s</span>
+                        <span id="boundarySplitText">0 (4s) / 0 (6s)</span>
+                    </div>
+                    <div class="progress-container" style="display: flex;">
+                        <div class="progress-bar" id="foursProgressBar" style="background: #0ea5e9;"></div>
+                        <div class="progress-bar" id="sixesProgressBar" style="background: #eab308;"></div>
+                    </div>
+                </div>
+                <p class="insight-text" id="boundaryInsight">Add matches to see batting approach insights.</p>
+            </div>
+
+            <div class="card tall dot-pressure-card" style="display: flex; flex-direction: column;">
+                <h3>Dot Ball Pressure</h3>
+                <div style="position: relative; height: 150px; display: flex; justify-content: center; margin-top: 10px;">
+                    <canvas id="dotGaugeChart"></canvas>
+                </div>
+                <div style="text-align: center; margin-top: -30px; margin-bottom: 15px;">
+                    <h2 id="dotPercentageValue" style="font-size: 26px;">0%</h2>
+                    <p style="font-size: 12px; opacity: 0.7;">Dot Balls: <span id="dotBallsText">0</span> / <span id="totalBallsText">0</span></p>
+                </div>
+                <p class="insight-text" id="dotInsight" style="margin-top: auto;">Add matches to see dot ball pressure insights.</p>
+            </div>
+
+            <div class="card tall impact-card" style="display: flex; flex-direction: column;">
+                <h3>Top Impact Matches</h3>
+                <div class="leaderboard-container">
+                    <ul id="impactLeaderboard" class="leaderboard-list">
+                        <div style="font-size: 12px; opacity: 0.5; text-align: center; padding: 20px 0;">Add matches to see impact scores.</div>
+                    </ul>
+                </div>
+                <p class="insight-text" id="impactInsight" style="margin-top: auto;">No impactful innings yet.</p>
+            </div>
+
+            <div class="card big heatmap-card" style="display: flex; flex-direction: column;">
+                <h3>Batting Performance Heatmap</h3>
+                <div class="heatmap-container" id="heatmapGrid" style="flex: 1; display: flex; gap: 4px; overflow-x: auto; padding-bottom: 10px; margin-top: 10px;">
+                    <!-- JS populated weeks -->
+                </div>
+                <div class="heatmap-legend" style="display: flex; gap: 5px; font-size: 11px; align-items: center; margin-top: 5px; justify-content: flex-end; opacity: 0.8;">
+                    Less
+                    <span style="width: 12px; height: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 2px;"></span>
+                    <span style="width: 12px; height: 12px; background: #333333; border-radius: 2px;"></span>
+                    <span style="width: 12px; height: 12px; background: #bbf7d0; border-radius: 2px;"></span>
+                    <span style="width: 12px; height: 12px; background: #22c55e; border-radius: 2px;"></span>
+                    <span style="width: 12px; height: 12px; background: #166534; border-radius: 2px;"></span>
+                    More
+                </div>
+                <p class="insight-text" id="heatmapInsight" style="margin-top: 15px;">Add matches to see calendar insights.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
