@@ -45,3 +45,20 @@ innings-lab/
 ├── assets/
 ├── README.md
 └── .gitignore
+
+
+🎯 Future Improvements
+🔐 Authentication system
+📊 Advanced analytics dashboard
+🌐 Full-stack integration (MERN)
+📱 Responsive mobile optimization
+
+🤝 Contributing
+Contributions are welcome! Feel free to fork this repo and submit a pull request.
+
+📧 Contact
+Aenish Khullar
+Creative Designer & Frontend Developer
+
+⭐ Show Your Support
+If you like this project, give it a ⭐ on GitHub!
