@@ -33,3 +33,15 @@ InningsLab is a cricket performance tracking platform designed for players to re
 ---
 
 ## 📂 Project Structure
+innings-lab/
+│
+├── frontend/
+│ ├── index.html
+│ ├── styles/
+│ ├── scripts/
+│
+├── backend/ (if added later)
+│
+├── assets/
+├── README.md
+└── .gitignore
